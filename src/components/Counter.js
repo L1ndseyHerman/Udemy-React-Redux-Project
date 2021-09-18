@@ -1,10 +1,8 @@
-import { Component } from 'react';
-
-import {useSelector, useDispatch, connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import classes from './Counter.module.css';
 
-/*const Counter = () => {
+const Counter = () => {
 
   //  useDispatch returns a dispatch function.
   const dispatch = useDispatch();
@@ -16,6 +14,12 @@ import classes from './Counter.module.css';
 
   const incrementHandler = () => {
     dispatch({type: 'increment'});
+  };
+
+  //  The value is just hard-coded here for demo purposes, may call this 
+  //  mult times w dif values, or get a variable the user typed in, etc.
+  const increaseHandler = () => {
+    dispatch({type: 'increase', amount: 10});
   };
 
   const decrementHandler = () => {
@@ -30,14 +34,17 @@ import classes from './Counter.module.css';
       <div className={classes.value}>{counter}</div>
       <div>
         <button onClick={incrementHandler}>Increment</button>
+        <button onClick={increaseHandler}>Increase by 10</button>
         <button onClick={decrementHandler}>Decrement</button>
       </div>
       <button onClick={toggleCounterHandler}>Toggle Counter</button>
     </main>
   );
-};*/
+};
 
-class Counter extends Component {
+export default Counter;
+
+/*class Counter extends Component {
 
   incrementHandler() {
     this.props.increment();
@@ -85,4 +92,4 @@ const mapDispatchToProps = dispatch => {
 
 //  This is where to put the connect()! It sets up and manages the subscription
 //  same as the functional component hooks.
-export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);*/
