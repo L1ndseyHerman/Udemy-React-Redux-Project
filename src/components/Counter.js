@@ -11,8 +11,8 @@ const Counter = () => {
   //  If u have a huge state object, just getting the counter property is helpful.
   //  This also subscribes this component to the store! Helpful!
   //  It updates the counter when the store updates... so the Observer pattern, maybe?
-  const counter = useSelector(state => state.counter);
-  const show = useSelector(state => state.showCounter);
+  const counter = useSelector(state => state.counter.counter);
+  const show = useSelector(state => state.counter.showCounter);
 
   const incrementHandler = () => {
     //  Impt! Actually execute the function here!
