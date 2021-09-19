@@ -1,51 +1,42 @@
-import {createStore} from 'redux';
+//  configureStore makes it easier to merge mult slices into 1 store.
+import {createSlice, configureStore} from '@reduxjs/toolkit';
 
 const initialState = {counter: 0, showCounter: true};
 
-//  Unlike React hooks, redux replaces objects, so u have to announce what all 
-//  the object property's values are, even if they haven't changed since last time.
-const counterReducer = (state = initialState, action) => {
-    if (action.type === 'increment') {
-        return {
-            counter: state.counter + 1,
-            showCounter: state.showCounter
+//  This could be just some of the store, like only related things like the 
+//  increament and decrement could be in it, the show/hide could be 
+//  somewhere else (even another file!) since it's not related to counting. 
+
+//  Every slice needs a name, name it what they have in common.
+//  Also, an initial state
+//  All of the reducers receive the current state, as well as the current action.
+const counterSlice = createSlice({
+    name: 'counter',
+    initialState: initialState,
+    reducers: {
+        increment(state) {
+            state.counter++;
+        },
+        decrement(state) {
+            state.counter--;
+        },
+        increase(state, action) {
+            state.counter = state.counter + action.payload;
+        },
+        toggleCounter(state) {
+            state.showCounter = !state.showCounter;
         }
     }
+});
 
-    //  Not good, don't want to hard-code like 100 actions here.
-    /*if (action.type === 'increaseby5') {
-        return {
-            counter: state.counter + 5
-        }
-    }*/
+//  configureStore() combines slices.
+//  "reducer" is a pre-coded property.
+const store = configureStore({
+    //  Could do if lots:
+    //reducer: {counter: counterSlice.reducer}
+    reducer: counterSlice.reducer
+});
 
-    //  Better, having 1 increase action that takes a param.
-    if (action.type === 'increase') {
-        return {
-            counter: state.counter + action.amount,
-            showCounter: state.showCounter
-        }
-    }
-
-    if (action.type === 'decrement') {
-        return {
-            counter: state.counter - 1,
-            showCounter: state.showCounter
-        }
-    }
-
-    //  Mentions that if this were slightly longer, a switch might be useful,
-    //  but sticking to if-statements here:
-    if (action.type === 'toggle') {
-        return {
-            showCounter: !state.showCounter,
-            counter: state.counter
-        };
-    }
-
-    return state;
-};
-
-const store = createStore(counterReducer);
-
+//  To bring it to Counter:
+export const counterActions = counterSlice.actions;
 export default store;

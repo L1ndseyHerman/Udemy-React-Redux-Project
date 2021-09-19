@@ -1,5 +1,6 @@
 import {useSelector, useDispatch} from 'react-redux';
 
+import {counterActions} from '../store/index';
 import classes from './Counter.module.css';
 
 const Counter = () => {
@@ -14,21 +15,25 @@ const Counter = () => {
   const show = useSelector(state => state.showCounter);
 
   const incrementHandler = () => {
-    dispatch({type: 'increment'});
+    //  Impt! Actually execute the function here!
+    dispatch(counterActions.increment());
   };
 
   //  The value is just hard-coded here for demo purposes, may call this 
   //  mult times w dif values, or get a variable the user typed in, etc.
   const increaseHandler = () => {
-    dispatch({type: 'increase', amount: 10});
+    //  Can pass a number like this, or an object, or whatever.
+    //  This will always get stored as "payload".
+    //  {type: WHAT_EVER, payload: 10}
+    dispatch(counterActions.increase(10));
   };
 
   const decrementHandler = () => {
-    dispatch({type: 'decrement'});
+    dispatch(counterActions.decrement());
   };
 
   const toggleCounterHandler = () => {
-    dispatch({type: 'toggle'});
+    dispatch(counterActions.toggleCounter());
   };
 
   return (
